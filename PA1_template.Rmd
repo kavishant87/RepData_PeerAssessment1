@@ -12,11 +12,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ##Loading and preprocessing the data
-
-researchdata <- read.csv("C:/Users/kavis/Documents/Kavi files/Git-R Files/RepData_PeerAssessment1/activity.csv")
-        
 library(ggplot2)
 library(knitr)
+
+researchdata <- read.csv("C:/Users/kavis/Documents/Kavi files/Git-R Files/RepData_PeerAssessment1/activity.csv")
+
 png("hist1.png")
 researchdata$date <- as.POSIXct(researchdata$date, "%Y-%m-%d")
 weekday <- weekdays(as.Date(researchdata$date))
@@ -31,9 +31,7 @@ totalSteps <- with(researchdata, aggregate(steps,
                                            FUN = sum,
                                            na.rm = TRUE))
 names(totalSteps) <- c("date", "steps")
-
 ##Make a histogram of the total number of steps taken each day
-
 hist(totalSteps$steps, main = "Total number of steps taken per day", 
                        xlab = "Total steps taken per day", 
                        col = "red", 
@@ -100,5 +98,3 @@ activity_by_date$time <- avgpattern$interval/100
 j <- ggplot(activity_by_date, aes(time, steps))
 j+geom_line(col="red")+ggtitle("Average steps per time interval: weekdays vs. weekends")+xlab("Time")+ylab("Steps")+theme(plot.title = element_text(face="bold", size=12))+facet_grid(DayType ~ .)
 dev.off()
-
-
